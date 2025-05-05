@@ -3,8 +3,8 @@ const connection = mysql2.createConnection({
     host: "localhost",
     user: "root",
     password: "root",
-    port: "330",
-    database: "hopihari_db"
+    port: "3306",
+    database: "hopi_hari_db"
 })
 
 exports.execute = (query, params = [], pool = connection) => {

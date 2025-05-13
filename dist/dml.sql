@@ -41,4 +41,5 @@
                rides.name
 		  FROM `lines`
 	INNER JOIN users ON `lines`.id_user = users.id
-    INNER JOIN rides ON `lines`.id_ride = rides.id;
+    INNER JOIN rides ON `lines`.id_ride = rides.id
+		 WHERE `lines`.id_ride = 8;

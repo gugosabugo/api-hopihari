@@ -6,7 +6,7 @@ exports.getNotificacoes = async (req, res, next) => {
             `SELECT * FROM notifications
                      WHERE id_user = 8
                        AND status = TRUE;`,
-            [req.params.idUser]
+            [res.locals.idUsuario]
         )
         res.status(201).send({
             "Resultado": resultado

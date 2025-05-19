@@ -7,5 +7,6 @@ router.get('/',
     login.required,
     notificationsController.getNotificacoes 
 )
+router.put('/:idNot', notificationsController.updateNotificacoes);
 
 module.exports = router;

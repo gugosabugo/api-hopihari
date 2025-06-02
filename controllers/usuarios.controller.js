@@ -4,18 +4,24 @@ const jwt = require("jsonwebtoken");
 
 exports.atualizarUsuario = async (req, res) => {
     try {
-        const idusuario = Number(req.params.id)
+        const hash = await bcrypt.hash(req.body.password, 10);
         const resultado = await mysql.execute(
             `UPDATE users
-    		    SET name = ?,
+    		    SET first_name = ?,
+                    last_name = ?,
 	    		    email = ?,
-                    password = ?
+                    password = ?,
+                    birth_date = ?,
+                    phone = ?
 		      WHERE id = ?;`,
-            [
-                req.body.name,
+              [
+                req.body.first_name,
+                req.body.last_name,
                 req.body.email,
-                req.body.password,
-                idusuario
+                hash,
+                req.body.birth_date,
+                req.body.phone,
+                req.body.id
             ]
         )
 
@@ -59,7 +65,7 @@ exports.login = async (req, res) => {
             `SELECT * FROM users WHERE email = ?;`,
             [req.body.email]);
 
-        if (usuario.lenght == 0) {
+        if (usuario.length == 0) {
             return res.status(401).send({ "Mensagem": "Usuario não encontrado!" })
         }
 
@@ -84,6 +90,7 @@ exports.login = async (req, res) => {
             "Mensagem": "Login realizado com sucesso!",
             "token": token,
             "user": {
+                "id":usuario[0].id,
                 "first_name": usuario[0].first_name,
                 "last_name": usuario[0].last_name,
                 "email": usuario[0].email,

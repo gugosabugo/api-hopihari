@@ -4,13 +4,11 @@ const jwt = require("jsonwebtoken");
 
 exports.atualizarUsuario = async (req, res) => {
     try {
-        const hash = await bcrypt.hash(req.body.password, 10);
         const resultado = await mysql.execute(
             `UPDATE users
     		    SET first_name = ?,
                     last_name = ?,
 	    		    email = ?,
-                    password = ?,
                     birth_date = ?,
                     phone = ?
 		      WHERE id = ?;`,
@@ -18,10 +16,9 @@ exports.atualizarUsuario = async (req, res) => {
                 req.body.first_name,
                 req.body.last_name,
                 req.body.email,
-                hash,
                 req.body.birth_date,
                 req.body.phone,
-                req.body.id
+                res.locals.idUsuario
             ]
         )
 
